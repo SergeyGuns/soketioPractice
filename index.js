@@ -1,9 +1,10 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-app.get('/', function(req, res){
-  res.sendfile('public/index.html');
+var url = require('url');
+app.get('*', function(req, res){
+  console.log(url.parse(req.url).href)
+  res.sendFile('D:/sg-work/soketioPractice/public/'+url.parse(req.url).href);
 });
 
 // io.on('connection', function(socket){
