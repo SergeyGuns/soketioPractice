@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      .movable {width: 20px;height: 20px;background-color: #000;}
+    </style>
+  </head>
+  <body>
+    <div class="movable"></div>
+  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js"></script>
+<script>
+  let movable = document.querySelector('.movable');
+  let keyAPressed = false;
+  var socket = io();
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    console.log('Прилетело с сервера',msg)
+    $('#messages').append($('<li>').text(msg));
+  });
+  Mousetrap.bind('a', !keyAPressed && ()=> socket.emit('key down A') , 'keydown');
+  Mousetrap.bind('a', ()=>socket.emit('key up A') , 'keyup');
+  Mousetrap.bind('s', function() {
+    socket.emit('key press S')
+  });
+  Mousetrap.bind('d', function() {
+    socket.emit('key press D')
+  });
+  Mousetrap.bind('w', function() {
+    socket.emit('key press W')
+  });
+
+  document.addEventListener('mousemove', (e)=>{
+    // socket.emit('left click' , e)
+    socket.emit('mousemove' , { X : e.clientX , Y : e.clientY})
+  })
+  document.addEventListener('touchmove', (e)=>{
+    // console.log(e)
+    socket.emit('mousemove' , { X : e.touches[0].clientX , Y : e.touches[0].clientY})
+  })
+
+  socket.on('mousemove' , (mouse)=>{
+    console.log(mouse)
+    movable.style.transform = `translate(${mouse.X}px,${mouse.Y}px)`
+  })
+
+  // socket.on('chat message', function(msg) {
+
+  // }
+
+
+</script>
+</html>
