@@ -20,11 +20,12 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
   socket.on('vectorLeft on serv send' , (vector) => {
-    console.log(vector)
+    // console.log(vector)
+    io.emit('vectorLeft from serv send', vector);
   });
-  socket.on('vectorRight on serv send' , (vector) => {
-    console.log(vector)
-  });
+  // socket.on('vectorRight on serv send' , (vector) => {
+  //   console.log(vector)
+  // });
   // socket.on('mousemove' , (mouse)=>{
   //   console.log(mouse)
   //   io.emit('mousemove', mouse);
@@ -34,8 +35,3 @@ io.on('connection', function(socket){
 http.listen(8080, function(){
   console.log('listening on *:8080');
 });
-
-let manipulationObj = {
-  x:0,
-  y:0
-}

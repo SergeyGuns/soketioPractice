@@ -47,6 +47,10 @@ Vector2.prototype = {
 		return (this.x*this.x)+(this.y*this.y);
 	},
 	
+	getVector : function () {
+		return [this.x , this.y]
+	},
+
 	normalise : function () {
 		
 		var m = this.magnitude();
