@@ -15,12 +15,8 @@ app.get('*', function(req, res){
 // });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    console.log('прилетело на сервер:',msg)
-    io.emit('chat message', msg);
-  });
   socket.on('vectorLeft on serv send' , (vector) => {
-    // console.log(vector)
+    console.log(vector)
     io.emit('vectorLeft from serv send', vector);
   });
   // socket.on('vectorRight on serv send' , (vector) => {

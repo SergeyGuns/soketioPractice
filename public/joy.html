@@ -72,7 +72,7 @@ var mouseX, mouseY,
   
   
 // document.body.appendChild(ship.canvas);
-setInterval(draw, 1000/35); 
+setInterval(draw, 1000/5); 
 if(touchable) {
   canvas.addEventListener( 'touchstart', onTouchStart, false );
   canvas.addEventListener( 'touchmove', onTouchMove, false );
@@ -106,7 +106,7 @@ function draw() {
     let joysticInfo = {};
     joysticInfo.p = 1;
     joysticInfo.v = [leftVector.x, leftVector.y];
-    socket.emit('vectorLeft on serv send' , joysticInfo)
+    socket.emit('vectorLeft on serv send' , leftVector)
   }
   if(rightVector.x  != currRightVector.x && rightVector.y  != currRightVector.y) {
     currRightVector = rightVector.toString()
